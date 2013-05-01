@@ -26,6 +26,7 @@
         </sca:component>
     </sca:composite>
     <domain>
+        <security moduleName="jboss-web-policy"/>
         <handlers>
             <handler class="org.switchyard.handlers.MessageTrace" name="MessageTrace"/>
         </handlers>

@@ -30,6 +30,7 @@
                         from="java:com.edevera.switchyard.app2.RequestB" to="java:com.edevera.switchyard.api.Request"/>
     </transforms>
     <domain>
+        <security moduleName="jboss-web-policy"/>
         <handlers>
             <handler class="org.switchyard.handlers.MessageTrace" name="MessageTrace"/>
         </handlers>
