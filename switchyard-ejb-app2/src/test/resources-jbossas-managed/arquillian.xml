@@ -10,7 +10,7 @@
         <configuration>
             <property name="jbossHome">/Applications/switchyard-as7-0.8</property>
             <property name="serverConfig">standalone-full.xml</property>
-            <property name="javaVmArguments">-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005</property>
+            <!--<property name="javaVmArguments">-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005</property>-->
         </configuration>
     </container>
 </arquillian>
