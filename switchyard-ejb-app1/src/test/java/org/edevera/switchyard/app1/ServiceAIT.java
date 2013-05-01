@@ -4,6 +4,9 @@ import java.io.File;
 
 import javax.inject.Inject;
 
+import com.edevera.switchyard.app1.RequestA;
+import com.edevera.switchyard.app1.ServiceA;
+import com.edevera.switchyard.app1.ServiceABean;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;

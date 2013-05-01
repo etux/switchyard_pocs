@@ -1,15 +1,9 @@
 <application xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/application_6.xsd"
              version="6">
-    <application-name>Switchyard EAR</application-name>
+    <application-name>Service A</application-name>
     <module>
-        <web>
-            <web-uri>test.war</web-uri>
-            <context-root>test</context-root>
-        </web>
-    </module>
-    <module>
-        <ejb>serviceb-imp.jar</ejb>
+        <ejb>switchyard-ejb-app1-1.0-SNAPSHOT.jar</ejb>
     </module>
     <library-directory>lib</library-directory>
 </application>

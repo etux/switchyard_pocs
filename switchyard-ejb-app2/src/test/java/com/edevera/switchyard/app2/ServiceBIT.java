@@ -2,10 +2,9 @@ package com.edevera.switchyard.app2;
 
 import java.io.File;
 
-import javax.inject.Inject;
 import javax.inject.Named;
+import javax.xml.namespace.QName;
 
-import com.edevera.switchyard.api.IService;
 import com.edevera.switchyard.api.Request;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.OperateOnDeployment;
@@ -22,7 +21,10 @@ import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.jboss.shrinkwrap.resolver.api.maven.MavenResolverSystem;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.switchyard.component.bean.Reference;
+import org.switchyard.internal.DefaultContext;
+import org.switchyard.remote.RemoteInvoker;
+import org.switchyard.remote.RemoteMessage;
+import org.switchyard.remote.http.HttpInvoker;
 
 /**
  * @author <a href="mailto:eduardo.devera@gmail.com">Eduardo de Vera</a>
@@ -33,44 +35,53 @@ import org.switchyard.component.bean.Reference;
 @Named
 public class ServiceBIT {
 
-    @Inject
-    @Reference("Service")
-    private IService service;
-
-//    @Deployment(order = 1, name = "ejb1")
-//    public static Archive createDeployment1() {
-//        MavenResolverSystem mavenResolver = Maven.configureResolver().fromFile(new File(System.getProperty("user.home"), ".m2/zimory-settings.xml"));
-//        EnterpriseArchive archive = ShrinkWrap.create(EnterpriseArchive.class, "servicea.ear");
-//        archive.addAsModule(
-//                mavenResolver.loadPomFromFile("pom.xml")
-//                        .resolve("com.edevera.switchyard:switchyard-ejb-app1").withoutTransitivity().asSingleFile()
-//        );
-//        archive.addAsLibraries(
-//                mavenResolver.loadPomFromFile("pom.xml").resolve("com.edevera.switchyard:switchyard-ejb-api").withTransitivity().asFile()
-//        );
-//        archive.writeTo(System.out, Formatters.VERBOSE);
-//        return archive;
-//    }
-
-    @Deployment(order = 1, name = "ejb2")
-    public static Archive createDeployment2() {
+    @Deployment(order = 1, name = "api")
+    public static Archive createApiDeployment() {
         MavenResolverSystem mavenResolver = Maven.configureResolver().fromFile(new File(System.getProperty("user.home"), ".m2/zimory-settings.xml"));
-        EnterpriseArchive archive = ShrinkWrap.create(EnterpriseArchive.class, "serviceb.ear");
-        archive
-            .addAsModule(createEjbDeployment())
-            .addAsModule(createTestDeployment())
-            .addAsApplicationResource("META-INF/application.xml", "application.xml")
-            .addAsLibraries(
-                    mavenResolver.loadPomFromFile("pom.xml").resolve("com.edevera.switchyard:switchyard-ejb-api").withTransitivity().asFile()
-            );
+        JavaArchive archive = ShrinkWrap.create(JavaArchive.class, "switchyard-ejb-api.jar");
+        archive.addPackage("com.edevera.switchyard.api");
         archive.writeTo(System.out, Formatters.VERBOSE);
         archive.as(ZipExporter.class).exportTo(new File("target", archive.getName()), true);
         return archive;
     }
 
-    public static JavaArchive createEjbDeployment() {
+    @Deployment(order = 2, name = "ejb1")
+    public static Archive createDeployment1() {
+        MavenResolverSystem mavenResolver = Maven.configureResolver().fromFile(new File(System.getProperty("user.home"), ".m2/zimory-settings.xml"));
+        EnterpriseArchive archive = ShrinkWrap.create(EnterpriseArchive.class, "servicea.ear")
+            .addAsApplicationResource("META-INF/serviceA-application.xml", "application.xml")
+            .addAsApplicationResource("jboss-deployment-structure.xml")
+            .addAsModule(
+                    mavenResolver.loadPomFromFile("pom.xml")
+                            .resolve("com.edevera.switchyard:switchyard-ejb-app1").withoutTransitivity().asSingleFile())
+            /*.addAsLibraries(
+                                mavenResolver.loadPomFromFile("pom.xml").resolve("com.edevera.switchyard:switchyard-ejb-api").withTransitivity().asFile())*/
+            ;
+        archive.writeTo(System.out, Formatters.VERBOSE);
+        archive.as(ZipExporter.class).exportTo(new File("target", archive.getName()), true);
+        return archive;
+    }
+
+    @Deployment(order = 3, name = "ejb2")
+    public static Archive createDeployment2() {
+        MavenResolverSystem mavenResolver = Maven.configureResolver().fromFile(new File(System.getProperty("user.home"), ".m2/zimory-settings.xml"));
+        EnterpriseArchive archive = ShrinkWrap.create(EnterpriseArchive.class, "serviceb.ear");
+        archive
+            .addAsModule(createServiceBDeployment())
+            //.addAsModule(createTestDeployment())
+            .addAsApplicationResource("META-INF/serviceB-application.xml", "application.xml")
+            .addAsApplicationResource("jboss-deployment-structure.xml")
+            /*.addAsLibraries(
+                    mavenResolver.loadPomFromFile("pom.xml").resolve("com.edevera.switchyard:switchyard-ejb-api").withTransitivity().asFile())*/
+        ;
+        archive.writeTo(System.out, Formatters.VERBOSE);
+        archive.as(ZipExporter.class).exportTo(new File("target", archive.getName()), true);
+        return archive;
+    }
+
+    public static JavaArchive createServiceBDeployment() {
         JavaArchive archive = ShrinkWrap.create(JavaArchive.class, "serviceb-imp.jar")
-                                .addAsManifestResource("META-INF/switchyard-ejb.xml", "switchyard.xml")
+                                .addAsManifestResource("META-INF/switchyard-serviceb.xml", "switchyard.xml")
                                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
                                 .addClasses(ServiceB.class, ServiceBBean.class, RequestB.class, TransformerServiceB.class);
         archive.writeTo(System.out, Formatters.VERBOSE);
@@ -78,21 +89,28 @@ public class ServiceBIT {
         return archive;
     }
 
+    @Deployment(order = 4, name = "test")
     public static WebArchive createTestDeployment() {
-        WebArchive archive = ShrinkWrap.create(WebArchive.class,"test.war")
+        WebArchive archive = ShrinkWrap.create(WebArchive.class, "test.war")
                                 .addClasses(ServiceBIT.class)
                                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
-                                .addAsManifestResource("META-INF/switchyard-test.xml", "switchyard.xml")
-                                ;
+                                .addAsWebInfResource("META-INF/jboss-web.xml", "jboss-web.xml")
+                                .addAsWebInfResource("jboss-deployment-structure.xml")
+                                .addAsManifestResource("META-INF/switchyard-test.xml", "switchyard.xml");
         archive.writeTo(System.out, Formatters.VERBOSE);
         archive.as(ZipExporter.class).exportTo(new File("target", archive.getName()), true);
         return archive;
     }
 
     @Test
-    @OperateOnDeployment("ejb2")
-    public void test() {
+    @OperateOnDeployment("test")
+    public void test() throws Exception {
         Request request = new Request();
-        service.operation(request);
+        RemoteInvoker invoker = new HttpInvoker("http://localhost:8080/switchyard-remote");
+        invoker.invoke(new RemoteMessage()
+                .setContext(new DefaultContext())
+                .setService(new QName("urn:com.edevera.switchyard.app2:switchyard-ejb-app2:1.0-SNAPSHOT", "ServiceB"))
+                .setContent(request));
+
     }
 }

@@ -1,4 +1,4 @@
-package org.edevera.switchyard.app1;
+package com.edevera.switchyard.app1;
 
 /**
  * @author <a href="mailto:eduardo.devera@gmail.com">Eduardo de Vera</a>

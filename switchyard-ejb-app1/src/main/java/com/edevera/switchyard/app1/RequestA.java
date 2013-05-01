@@ -1,4 +1,4 @@
-package org.edevera.switchyard.app1;
+package com.edevera.switchyard.app1;
 
 import java.io.Serializable;
 
