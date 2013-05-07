@@ -11,17 +11,17 @@
     <sca:composite name="switchyard-ejb-app2"
                    targetNamespace="urn:com.edevera.switchyard.app2:switchyard-ejb-app2-test:1.0-SNAPSHOT">
 
-        <sca:reference name="Service" multiplicity="0..1" promote="ServiceBIT/Service">
+        <sca:reference name="Service" multiplicity="1..1" promote="ServiceBIT/Service">
             <sca:binding.sca
                     swyd:target="ServiceB"
                     swyd:targetNamespace="urn:com.edevera.switchyard.app2:switchyard-ejb-app2:1.0-SNAPSHOT"/>
-            <sca:interface.java interface="com.edevera.switchyard.api.IService"/>
+            <sca:interface.java interface="com.edevera.switchyard.api.IServiceA"/>
         </sca:reference>
 
         <sca:component name="ServiceBIT">
             <bean:implementation.bean class="com.edevera.switchyard.app2.ServiceBIT"/>
             <sca:reference name="Service">
-                <sca:interface.java interface="com.edevera.switchyard.api.IService"/>
+                <sca:interface.java interface="com.edevera.switchyard.api.IServiceA"/>
             </sca:reference>
         </sca:component>
     </sca:composite>

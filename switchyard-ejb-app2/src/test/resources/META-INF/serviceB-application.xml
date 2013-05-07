@@ -2,12 +2,6 @@
              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/application_6.xsd"
              version="6">
     <application-name>Service B</application-name>
-    <!--<module>
-        <web>
-            <web-uri>testing.war</web-uri>
-            <context-root>testing</context-root>
-        </web>
-    </module>-->
     <module>
         <ejb>serviceb-imp.jar</ejb>
     </module>

@@ -7,7 +7,7 @@
             name="switchyard-ejb">
     <sca:composite name="switchyard-ejb" targetNamespace="urn:com.edevera.switchyard.app1:switchyard-ejb-app1:1.0-SNAPSHOT">
         <sca:service name="ServiceA" promote="ComponentA/ServiceA">
-            <sca:interface.java interface="com.edevera.switchyard.api.IService" />
+            <sca:interface.java interface="com.edevera.switchyard.api.IServiceA" />
             <sca:binding.sca />
         </sca:service>
         <sca:component name="ComponentA">
@@ -24,12 +24,12 @@
                 xmlns="urn:switchyard-config:transform:1.0"
                 class="com.edevera.switchyard.app1.TransformerServiceA"
                 from="java:com.edevera.switchyard.app1.RequestA"
-                to="java:com.edevera.switchyard.api.Request"
+                to="java:com.edevera.switchyard.api.RequestA"
                 />
         <transform.java
                 xmlns="urn:switchyard-config:transform:1.0"
                 class="com.edevera.switchyard.app1.TransformerServiceA"
-                from="java:com.edevera.switchyard.api.Request"
+                from="java:com.edevera.switchyard.api.RequestA"
                 to="java:com.edevera.switchyard.app1.RequestA"
                 />
     </sy:transforms>

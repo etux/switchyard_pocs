@@ -1,6 +1,5 @@
 package com.edevera.switchyard.app1;
 
-import com.edevera.switchyard.api.Request;
 import org.switchyard.annotations.Transformer;
 
 /**
@@ -9,12 +8,12 @@ import org.switchyard.annotations.Transformer;
 public class TransformerServiceA {
 
     @Transformer
-    public RequestA from(Request request) {
-        return new RequestA();
+    public com.edevera.switchyard.app1.RequestA from(com.edevera.switchyard.api.RequestA request) {
+        return new com.edevera.switchyard.app1.RequestA();
     }
 
     @Transformer
-    public Request from(RequestA request) {
-        return new Request();
+    public com.edevera.switchyard.api.RequestA from(com.edevera.switchyard.app1.RequestA request) {
+        return new com.edevera.switchyard.api.RequestA();
     }
 }
