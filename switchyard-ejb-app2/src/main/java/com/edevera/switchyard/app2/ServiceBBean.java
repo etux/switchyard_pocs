@@ -2,7 +2,7 @@ package com.edevera.switchyard.app2;
 
 import javax.inject.Inject;
 
-import com.edevera.switchyard.api.IServiceA;
+import com.edevera.switchyard.api.ServiceA;
 import com.edevera.switchyard.api.RequestA;
 import org.switchyard.component.bean.Reference;
 import org.switchyard.component.bean.Service;
@@ -15,7 +15,7 @@ public class ServiceBBean implements ServiceB {
 
     @Inject
     @Reference("ServiceA")
-    private IServiceA service;
+    private ServiceA service;
 
     @Override
     public void operation(RequestB requestB) {

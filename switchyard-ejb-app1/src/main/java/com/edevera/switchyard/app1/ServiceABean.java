@@ -9,7 +9,7 @@ import org.switchyard.component.bean.Service;
 public class ServiceABean implements ServiceA {
 
     @Override
-    public void operation(RequestA request) {
+    public void operationA(RequestA request) {
         System.out.println("Service A Operation");
     }
 }

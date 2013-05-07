@@ -11,6 +11,8 @@
         <module>switchyard-ejb-api</module>
         <module>switchyard-ejb-app1</module>
         <module>switchyard-ejb-app2</module>
+        <module>switchyard-ejb-app1-ear</module>
+        <module>switchyard-ejb-app2-ear</module>
     </modules>
 
     <build>
@@ -36,16 +38,19 @@
                 <groupId>com.edevera.switchyard</groupId>
                 <artifactId>switchyard-ejb-api</artifactId>
                 <version>1.0-SNAPSHOT</version>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>com.edevera.switchyard</groupId>
                 <artifactId>switchyard-ejb-app1</artifactId>
                 <version>1.0-SNAPSHOT</version>
+                <type>ejb</type>
             </dependency>
             <dependency>
                 <groupId>com.edevera.switchyard</groupId>
                 <artifactId>switchyard-ejb-app2</artifactId>
                 <version>1.0-SNAPSHOT</version>
+                <type>ejb</type>
             </dependency>
             <dependency>
                 <groupId>org.jboss.shrinkwrap.resolver</groupId>

@@ -5,5 +5,5 @@ package com.edevera.switchyard.app1;
  */
 public interface ServiceA {
 
-    void operation(RequestA request);
+    void operationA(RequestA request);
 }

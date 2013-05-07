@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>switchyard-ejb-parent</artifactId>
+        <groupId>com.edevera.switchyard</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>switchyard-ejb-app2-ear</artifactId>
+    <packaging>ear</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.edevera.switchyard</groupId>
+            <artifactId>switchyard-ejb-app2</artifactId>
+            <type>ejb</type>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <version>2.8</version>
+                <executions>
+                    <execution>
+                        <id>app1-application_xml</id>
+                        <goals>
+                            <goal>generate-application-xml</goal>
+                        </goals>
+                        <configuration>
+                            <applicationName>ServiceB</applicationName>
+                            <modules>
+                                <ejbModule>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>switchyard-ejb-app2</artifactId>
+                                </ejbModule>
+                            </modules>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>app1-ear</id>
+                        <goals>
+                            <goal>ear</goal>
+                        </goals>
+                        <configuration>
+                            <finalName>serviceb.ear</finalName>
+                            <earSourceDirectory>${project.build.outputDirectory}</earSourceDirectory>
+                            <modules>
+                                <ejbModule>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>switchyard-ejb-app2</artifactId>
+                                </ejbModule>
+                            </modules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.jboss.as.plugins</groupId>
+                <artifactId>jboss-as-maven-plugin</artifactId>
+                <version>7.4.Final</version>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

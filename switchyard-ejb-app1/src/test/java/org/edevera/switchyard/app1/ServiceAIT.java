@@ -66,6 +66,6 @@ public class ServiceAIT {
     @Test
     public void test() {
         final RequestA request = new RequestA();
-        serviceA.operation(request);
+        serviceA.operationA(request);
     }
 }

@@ -1,1 +1,4 @@
 *.iml
+.classpath
+org.eclipse.*
+.project

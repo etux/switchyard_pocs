@@ -15,13 +15,13 @@
             <sca:binding.sca
                     swyd:target="ServiceB"
                     swyd:targetNamespace="urn:com.edevera.switchyard.app2:switchyard-ejb-app2:1.0-SNAPSHOT"/>
-            <sca:interface.java interface="com.edevera.switchyard.api.IServiceA"/>
+            <sca:interface.java interface="com.edevera.switchyard.api.ServiceA"/>
         </sca:reference>
 
         <sca:component name="ServiceBIT">
             <bean:implementation.bean class="com.edevera.switchyard.app2.ServiceBIT"/>
             <sca:reference name="Service">
-                <sca:interface.java interface="com.edevera.switchyard.api.IServiceA"/>
+                <sca:interface.java interface="com.edevera.switchyard.api.ServiceA"/>
             </sca:reference>
         </sca:component>
     </sca:composite>
