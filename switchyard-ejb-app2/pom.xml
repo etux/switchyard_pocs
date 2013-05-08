@@ -14,6 +14,14 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
+                <configuration>
+                    <mainClass>com.edevera.switchyard.app2.ServiceBClient</mainClass>
+                </configuration>
+            </plugin>
+            <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-ejb-plugin</artifactId>
               <version>2.3</version>
@@ -44,25 +52,10 @@
         </plugins>
     </build>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>com.edevera.switchyard</groupId>
-                <artifactId>switchyard-ejb-app1</artifactId>
-                <version>1.0-SNAPSHOT</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
     <dependencies>
         <dependency>
             <groupId>com.edevera.switchyard</groupId>
             <artifactId>switchyard-ejb-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.edevera.switchyard</groupId>
-            <artifactId>switchyard-ejb-app1</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.switchyard</groupId>

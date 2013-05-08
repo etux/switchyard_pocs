@@ -1,9 +1,9 @@
 package com.edevera.switchyard.api;
 
+import java.io.Serializable;
+
 /**
  * @author <a href="mailto:eduardo.devera@gmail.com">Eduardo de Vera</a>
- *         Date: 5/7/13
- *         Time: 9:31 PM
  */
-public class RequestB {
+public class RequestB implements Serializable {
 }

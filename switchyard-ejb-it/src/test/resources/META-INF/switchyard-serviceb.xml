@@ -4,40 +4,38 @@
             xmlns:sca="http://docs.oasis-open.org/ns/opencsa/sca/200912"
             xmlns:soap="urn:switchyard-component-soap:config:1.0"
             xmlns:swyd="urn:switchyard-config:switchyard:1.0"
-            xmlns:trx="urn:switchyard-config:transform:1.0"
+            xmlns:trfm="urn:switchyard-config:transform:1.0"
             xmlns:vldt="urn:switchyard-config:validate:1.0"
             name="switchyard-ejb-app2"
             targetNamespace="urn:com.edevera.switchyard.app2:switchyard-ejb-app2:1.0-SNAPSHOT">
     <composite xmlns="http://docs.oasis-open.org/ns/opencsa/sca/200912" name="switchyard-ejb-app2"
                targetNamespace="urn:com.edevera.switchyard.app2:switchyard-ejb-app2:1.0-SNAPSHOT">
 
-        <sca:service name="ServiceB" promote="ServiceB">
-            <sca:interface.java interface="com.edevera.switchyard.api.ServiceB"/>
+        <sca:service name="ServiceB" promote="ComponentB/ServiceB">
             <sca:binding.sca />
+            <sca:interface.java interface="com.edevera.switchyard.api.ServiceB"/>
         </sca:service>
 
         <sca:reference name="ServiceA" multiplicity="1..1" promote="ComponentB/ServiceA">
-            <sca:interface.java interface="com.edevera.switchyard.api.ServiceA" />
             <sca:binding.sca
-                    swyd:target="ServiceA"
                     swyd:targetNamespace="urn:com.edevera.switchyard.app1:switchyard-ejb-app1:1.0-SNAPSHOT"/>
         </sca:reference>
 
         <sca:component name="ComponentB">
             <bean:implementation.bean class="com.edevera.switchyard.app2.ServiceBBean"/>
             <sca:service name="ServiceB">
-                <sca:interface.java interface="com.edevera.switchyard.app2.ServiceB"/>
+                <interface.java interface="com.edevera.switchyard.app2.ServiceB"/>
             </sca:service>
             <sca:reference name="ServiceA">
-                <sca:interface.java interface="com.edevera.switchyard.api.ServiceA" />
+                <interface.java interface="com.edevera.switchyard.api.ServiceA" />
             </sca:reference>
         </sca:component>
 
     </composite>
     <swyd:transforms>
-        <trx:transform.java class="com.edevera.switchyard.app2.TransformerServiceB"
+        <trfm:transform.java class="com.edevera.switchyard.app2.TransformerServiceB"
                         from="java:com.edevera.switchyard.api.RequestB" to="java:com.edevera.switchyard.app2.RequestB"/>
-        <trx:transform.java class="com.edevera.switchyard.app2.TransformerServiceB"
+        <trfm:transform.java class="com.edevera.switchyard.app2.TransformerServiceB"
                         from="java:com.edevera.switchyard.app2.RequestB" to="java:com.edevera.switchyard.api.RequestB"/>
     </swyd:transforms>
     <swyd:domain>

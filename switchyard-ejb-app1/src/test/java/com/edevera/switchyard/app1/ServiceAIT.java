@@ -1,12 +1,9 @@
-package org.edevera.switchyard.app1;
+package com.edevera.switchyard.app1;
 
 import java.io.File;
 
 import javax.inject.Inject;
 
-import com.edevera.switchyard.app1.RequestA;
-import com.edevera.switchyard.app1.ServiceA;
-import com.edevera.switchyard.app1.ServiceABean;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.Archive;
@@ -32,7 +29,7 @@ public class ServiceAIT {
 
     @Inject
     @Reference
-    ServiceA serviceA;
+    com.edevera.switchyard.api.ServiceA serviceA;
 
     @Deployment
     public static Archive createArchive() {
@@ -57,15 +54,17 @@ public class ServiceAIT {
     }
 
     private static WebArchive getWebArchive() {
-        WebArchive archive = ShrinkWrap.create(WebArchive.class, "test-servicea-impl.war")
-                .addClass(ServiceAIT.class);
+        WebArchive archive = ShrinkWrap.create(WebArchive.class, "test.war")
+                .addClass(ServiceAIT.class)
+                .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
+                .addAsManifestResource("META-INF/switchyard-test.xml", "switchyard.xml");
         archive.writeTo(System.out, Formatters.VERBOSE);
         return archive;
     }
 
     @Test
     public void test() {
-        final RequestA request = new RequestA();
-        serviceA.operationA(request);
+        final com.edevera.switchyard.api.RequestA request = new com.edevera.switchyard.api.RequestA();
+        serviceA.operation(request);
     }
 }

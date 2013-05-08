@@ -1,1 +1,0 @@
-Dependencies: deployment.switchyard-ejb-api.jar

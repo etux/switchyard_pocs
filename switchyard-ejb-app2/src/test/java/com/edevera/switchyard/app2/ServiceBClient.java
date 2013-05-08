@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import javax.xml.namespace.QName;
 
-import org.junit.Test;
 import org.switchyard.internal.DefaultContext;
 import org.switchyard.remote.RemoteInvoker;
 import org.switchyard.remote.RemoteMessage;
@@ -15,10 +14,10 @@ import org.switchyard.remote.http.HttpInvoker;
  *         Date: 5/7/13
  *         Time: 9:03 PM
  */
-public class ServiceBTest {
+public class ServiceBClient {
 
-    @Test
-    public void test() throws IOException {
+
+    public static void main(String[] args) throws IOException {
         com.edevera.switchyard.api.RequestB request = new com.edevera.switchyard.api.RequestB();
         RemoteInvoker invoker = new HttpInvoker("http://localhost:8080/switchyard-remote");
         invoker.invoke(new RemoteMessage()

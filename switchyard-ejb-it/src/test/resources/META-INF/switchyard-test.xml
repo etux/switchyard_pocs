@@ -19,16 +19,15 @@
         </sca:reference>
 
         <sca:component name="ServiceBIT">
-            <bean:implementation.bean class="com.edevera.switchyard.it.ServiceBIT"/>
+            <bean:implementation.bean class="com.edevera.switchyard.app2.ServiceBIT"/>
             <sca:reference name="Service">
                 <sca:interface.java interface="com.edevera.switchyard.api.ServiceA"/>
             </sca:reference>
         </sca:component>
     </sca:composite>
-    <domain>
-        <security moduleName="jboss-web-policy"/>
+    <!--<domain>
         <handlers>
             <handler class="org.switchyard.handlers.MessageTrace" name="MessageTrace"/>
         </handlers>
-    </domain>
+    </domain>-->
 </switchyard>

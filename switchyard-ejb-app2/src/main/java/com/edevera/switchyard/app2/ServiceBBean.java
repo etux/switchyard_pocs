@@ -21,6 +21,6 @@ public class ServiceBBean implements ServiceB {
     public void operation(RequestB requestB) {
         System.out.println("ServiceB operation");
         final RequestA request = new RequestA();
-        service.operationA(request);
+        service.operation(request);
     }
 }
