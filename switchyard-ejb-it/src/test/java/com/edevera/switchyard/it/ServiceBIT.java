@@ -37,7 +37,7 @@ public class ServiceBIT {
 
     @Deployment(order = 1, name = "api")
     public static Archive createApiDeployment() {
-        MavenResolverSystem mavenResolver = Maven.configureResolver().fromFile(new File(System.getProperty("user.home"), ".m2/zimory-settings.xml"));
+        MavenResolverSystem mavenResolver = Maven.configureResolver().fromFile(new File(System.getProperty("user.home"), ".m2/settings.xml"));
         JavaArchive archive = ShrinkWrap.create(JavaArchive.class, "switchyard-ejb-api.jar")
             .merge(mavenResolver.loadPomFromFile("pom.xml").resolve("com.edevera.switchyard:switchyard-ejb-api").withoutTransitivity().as(JavaArchive.class)[0]);
         archive.writeTo(System.out, Formatters.VERBOSE);
@@ -48,7 +48,7 @@ public class ServiceBIT {
 
     @Deployment(order = 2, name = "ejb1")
     public static Archive createApp1Deployment() {
-        PomlessResolveStage resolver = Maven.configureResolver().fromFile(new File(System.getProperty("user.home"), ".m2/zimory-settings.xml")).offline();
+        PomlessResolveStage resolver = Maven.configureResolver().fromFile(new File(System.getProperty("user.home"), ".m2/settings.xml")).offline();
         EnterpriseArchive archive = ShrinkWrap.create(EnterpriseArchive.class, "servicea.ear")
                 .merge(resolver.loadPomFromFile("pom.xml").resolve("com.edevera.switchyard:switchyard-ejb-app1-ear:ear:1.0-SNAPSHOT").withoutTransitivity().as(EnterpriseArchive.class)[0]);
         archive.writeTo(System.out, Formatters.VERBOSE);
@@ -59,7 +59,7 @@ public class ServiceBIT {
 
     @Deployment(order = 3, name = "ejb2")
     public static Archive createApp2Deployment() {
-        PomlessResolveStage mavenResolver = Maven.configureResolver().fromFile(new File(System.getProperty("user.home"), ".m2/zimory-settings.xml")).offline();
+        PomlessResolveStage mavenResolver = Maven.configureResolver().fromFile(new File(System.getProperty("user.home"), ".m2/settings.xml")).offline();
         EnterpriseArchive archive = ShrinkWrap.create(EnterpriseArchive.class, "serviceb.ear")
             .merge(mavenResolver.loadPomFromFile("pom.xml").resolve("com.edevera.switchyard:switchyard-ejb-app2-ear:ear:1.0-SNAPSHOT").withoutTransitivity().as(EnterpriseArchive.class)[0]);
         archive.writeTo(System.out, Formatters.VERBOSE);
@@ -70,7 +70,7 @@ public class ServiceBIT {
 
     @Deployment(order = 4, name = "test")
     public static WebArchive createTestDeployment() {
-        PomlessResolveStage mavenResolver = Maven.configureResolver().fromFile(new File(System.getProperty("user.home"), ".m2/zimory-settings.xml")).offline();
+        PomlessResolveStage mavenResolver = Maven.configureResolver().fromFile(new File(System.getProperty("user.home"), ".m2/settings.xml")).offline();
         WebArchive archive = ShrinkWrap.create(WebArchive.class)
                 .addClasses(ServiceBIT.class)
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")

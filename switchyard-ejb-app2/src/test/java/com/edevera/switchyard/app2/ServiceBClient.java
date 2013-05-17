@@ -11,8 +11,6 @@ import org.switchyard.remote.http.HttpInvoker;
 
 /**
  * @author <a href="mailto:eduardo.devera@gmail.com">Eduardo de Vera</a>
- *         Date: 5/7/13
- *         Time: 9:03 PM
  */
 public class ServiceBClient {
 
